@@ -5,10 +5,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: HansvanVeen.azurermdeployment-extension.azurermdeployment-release-task.AzureRmDeployment@1
+  displayName: AzureRmDeployment
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise (4f911ca4-870d-4fb6-894b-6814ecd3776d)'
+    resourceLocation: 'east us'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/hanuravim/sandeep/master/WebApp_master.json'
+    csmParametersFileLink: 'https://raw.githubusercontent.com/hanuravim/sandeep/master/WebApp_Parameters.json'
