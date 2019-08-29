@@ -6,7 +6,7 @@ pool:
 
 steps:
 - task: HansvanVeen.azurermdeployment-extension.azurermdeployment-release-task.AzureRmDeployment@1
-  displayName: AzureRmDeployment
+  displayName: Linux Web App
   inputs:
     azureSubscription: 'Visual Studio Enterprise (4f911ca4-870d-4fb6-894b-6814ecd3776d)'
     resourceLocation: 'east us'
