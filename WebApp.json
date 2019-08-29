@@ -3,33 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "webAppName": {
-      "type": "string",
-      "defaultValue" : "AzureLinuxApp",
-      "metadata": {
-        "description": "Base name of the resource such as web app name and app service plan "
-      },
-      "minLength": 2
+      "type": "string"
     },
-    "sku":{
-      "type": "string",
-      "defaultValue" : "S1",
-      "metadata": {
-        "description": "The SKU of App Service Plan "
-      }
+    "sku": {
+      "type": "string"
     },
-    "linuxFxVersion" : {
-        "type": "string",
-        "defaultValue" : "php|7.0",
-        "metadata": {
-          "description": "The Runtime stack of current web app"
-        }
-    },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources."
-      }
+    "linuxFxVersion": {
+      "type": "string"
     }
   },
   "variables": {
@@ -42,13 +22,13 @@
       "apiVersion": "2017-08-01",
       "kind": "linux",
       "name": "[variables('appServicePlanName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourcegroup().location]",
       "dependsOn": [],
       "sku": {
         "name": "[parameters('sku')]"
       },
-      "properties":{
-        "reserved":true
+      "properties": {
+        "reserved": true
       }
     },
     {
@@ -56,12 +36,12 @@
       "apiVersion": "2016-08-01",
       "kind": "app",
       "name": "[variables('webAppPortalName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourcegroup().location]",
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
-            "linuxFxVersion": "[parameters('linuxFxVersion')]"
-          }
+          "linuxFxVersion": "[parameters('linuxFxVersion')]"
+        }
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
