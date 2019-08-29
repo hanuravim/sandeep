@@ -45,7 +45,7 @@
             "appServicePlanName": "[concat('AppServicePlan-', parameters('webAppName'))]"
         },
         "TemplateURLs": {
-            "WebApp": "[concat(parameters('artifacts_baseUri'),'/WebApp.json')]"
+            "WebApp": "[concat(parameters('artifacts_baseUri'),'/master/linkedTemplates/webapp.json')]"
         }
     },
     "resources": [
