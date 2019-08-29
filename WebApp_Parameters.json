@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "value": "linuxApp"
+        },
+        "resourcelocation": {
+            "value": "eastus"
+        },
+        "artifacts_baseUri": {
+            "value": "https://raw.githubusercontent.com/hanuravim/sandeep"
+        }
+    }
+}
