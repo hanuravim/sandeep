@@ -1,0 +1,88 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "type": "string",
+            "defaultValue": "AzureLinuxApp",
+            "metadata": {
+                "description": "Base name of the resource such as web app name and app service plan "
+            },
+            "minLength": 2
+        },
+        "resourcelocation": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "S1",
+            "metadata": {
+                "description": "The SKU of App Service Plan "
+            }
+        },
+        "linuxFxVersion": {
+            "type": "string",
+            "defaultValue": "php|7.0",
+            "metadata": {
+                "description": "The Runtime stack of current web app"
+            }
+        },
+        "artifacts_baseUri": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "standardTags": {
+            "ApplicationName": "ems",
+            "uai": "uai2008973",
+            "SupportEmail": "ravi.mishra@ge.com",
+            "env": "d",
+            "preserve": "true"
+        },
+        "resourceNames": {
+            "ResourceGroup": "ravitest",
+            "webAppPortalName": "[concat(parameters('webAppName'), '-webapp')]",
+            "appServicePlanName": "[concat('AppServicePlan-', parameters('webAppName'))]"
+        },
+        "TemplateURLs": {
+            "WebApp": "[concat(parameters('artifacts_baseUri'),'/WebApp.json')]"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "name": "[variables('resourceNames').ResourceGroup]",
+            "location": "[parameters('resourcelocation')]",
+            "apiVersion": "2018-05-01",
+            "tags": "[variables('standardTags')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "webApp",
+            "apiVersion": "2018-05-01",
+            "resourcegroup": "[variables('resourceNames').ResourceGroup]",
+            "dependsOn": [
+                "[variables('resourceNames').ResourceGroup]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('TemplateURLs').WebApp]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "webAppName": {
+                        "value": "[parameters('webAppName')]"
+                    },
+                    "sku": {
+                        "value": "[parameters('sku')]"
+                    },
+                    "linuxFxVersion": {
+                        "value": "[parameters('linuxFxVersion')]"
+                    }
+                }
+            }
+        }
+    ]
+}
